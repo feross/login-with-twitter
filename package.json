@@ -1,0 +1,45 @@
+{
+  "name": "login-with-twitter",
+  "description": "Login with Twitter. OAuth without the nonsense.",
+  "version": "0.0.0",
+  "author": {
+    "name": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "http://feross.org/"
+  },
+  "browser": {
+    "unzip-response": false
+  },
+  "bugs": {
+    "url": "https://github.com/feross/login-with-twitter/issues"
+  },
+  "dependencies": {
+    "request": "^2.79.0",
+  },
+  "devDependencies": {
+    "standard": "*",
+    "tape": "^4.0.0"
+  },
+  "homepage": "https://github.com/feross/login-with-twitter",
+  "keywords": [
+    "login",
+    "twitter",
+    "auth",
+    "oauth",
+    "twitter login",
+    "login with twitter",
+    "twitter connect",
+    "twitter auth",
+    "api",
+    "twitter api"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feross/login-with-twitter.git"
+  },
+  "scripts": {
+    "test": "standard && tape test/*.js"
+  }
+}
