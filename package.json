@@ -1,7 +1,7 @@
 {
   "name": "login-with-twitter",
   "description": "Login with Twitter. OAuth without the nonsense.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Feross Aboukhadijeh",
     "email": "feross@feross.org",
