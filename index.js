@@ -27,7 +27,7 @@ class LoginWithTwitter {
     const oauth = {
       consumer_key: this.consumerKey,
       consumer_secret: this.consumerSecret,
-      callbackUrl: this.callbackUrl
+      callback: this.callbackUrl
     }
 
     // Get a "request token"
