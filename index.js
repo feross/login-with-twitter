@@ -24,6 +24,11 @@ class LoginWithTwitter {
   }
 
   login (cb) {
+    // Check that required params exist
+    if (typeof cb !== 'function') {
+      throw new Error('Invalid or missing `cb` parameter for login method')
+    }
+
     const oauth = {
       consumer_key: this.consumerKey,
       consumer_secret: this.consumerSecret,
