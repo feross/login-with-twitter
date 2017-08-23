@@ -65,14 +65,14 @@ class LoginWithTwitter {
     if (!cb || typeof cb !== 'function') {
       throw new Error('Invalid or missing `cb` parameter for login callback')
     }
-    if (!params.oauth_token || typeof params.oauth_token !== 'string') {
-      cb(new Error('Invalid or missing `oauth_token` parameter for login callback'))
+    if (typeof params.oauth_token !== 'string' || params.oauth_token.length === 0) {
+      return cb(new Error('Invalid or missing `oauth_token` parameter for login callback'))
     }
-    if (!params.oauth_verifier || typeof params.oauth_verifier !== 'string') {
-      cb(new Error('Invalid or missing `oauth_verifier` parameter for login callback'))
+    if (typeof params.oauth_verifier !== 'string' || params.oauth_verifier.length === 0) {
+      return cb(new Error('Invalid or missing `oauth_verifier` parameter for login callback'))
     }
-    if (!tokenSecret || typeof tokenSecret !== 'string') {
-      cb(new Error('Invalid or missing `tokenSecret` argument for login callback'))
+    if (typeof tokenSecret !== 'string' || tokenSecret.length === 0) {
+      return cb(new Error('Invalid or missing `tokenSecret` argument for login callback'))
     }
 
     const oauth = {
