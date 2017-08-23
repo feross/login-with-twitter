@@ -1,5 +1,7 @@
+const crypto = require('crypto')
+const get = require('simple-get')
+const OAuth = require('oauth-1.0a')
 const querystring = require('querystring')
-const request = require('request')
 
 const TW_REQ_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
 const TW_AUTH_URL = 'https://api.twitter.com/oauth/authenticate'
@@ -21,6 +23,17 @@ class LoginWithTwitter {
     this.consumerKey = opts.consumerKey
     this.consumerSecret = opts.consumerSecret
     this.callbackUrl = opts.callbackUrl
+
+    this._oauth = OAuth({
+      consumer: {
+        key: this.consumerKey,
+        secret: this.consumerSecret
+      },
+      signature_method: 'HMAC-SHA1',
+      hash_function: (baseString, key) => {
+        return crypto.createHmac('sha1', key).update(baseString).digest('base64')
+      }
+    })
   }
 
   login (cb) {
@@ -29,24 +42,33 @@ class LoginWithTwitter {
       throw new Error('Invalid or missing `cb` parameter for login method')
     }
 
-    const oauth = {
-      consumer_key: this.consumerKey,
-      consumer_secret: this.consumerSecret,
-      callback: this.callbackUrl
+    const requestData = {
+      url: TW_REQ_TOKEN_URL,
+      method: 'POST',
+      data: {
+        oauth_callback: this.callbackUrl
+      }
     }
 
     // Get a "request token"
-    request.post({ url: TW_REQ_TOKEN_URL, oauth: oauth }, (err, _, body) => {
+    get.concat({
+      url: requestData.url,
+      method: requestData.method,
+      form: requestData.data,
+      headers: this._oauth.toHeader(this._oauth.authorize(requestData))
+    }, (err, res, data) => {
       if (err) return cb(err)
 
       const {
         oauth_token: token,
         oauth_token_secret: tokenSecret,
         oauth_callback_confirmed: callbackConfirmed
-      } = querystring.parse(body)
+      } = querystring.parse(data.toString())
 
       // Must validate that this param exists, according to Twitter docs
-      if (callbackConfirmed !== 'true') return cb(err)
+      if (callbackConfirmed !== 'true') {
+        return cb(new Error('Missing `oauth_callback_confirmed` parameter in response'))
+      }
 
       // Redirect visitor to this URL to authorize the app
       const url = `${TW_AUTH_URL}?${querystring.stringify({ oauth_token: token })}`
@@ -80,16 +102,23 @@ class LoginWithTwitter {
       return cb(new Error('Invalid or missing `tokenSecret` argument for login callback'))
     }
 
-    const oauth = {
-      consumer_key: this.consumerKey,
-      consumer_secret: this.consumerSecret,
-      token: token,
-      token_secret: tokenSecret,
-      verifier: verifier
+    const requestData = {
+      url: TW_ACCESS_TOKEN_URL,
+      method: 'POST',
+      data: {
+        oauth_token: token,
+        oauth_token_secret: tokenSecret,
+        oauth_verifier: verifier
+      }
     }
 
     // Get a user "access token" and "access token secret"
-    request.post({ url: TW_ACCESS_TOKEN_URL, oauth: oauth }, (err, _, body) => {
+    get.concat({
+      url: requestData.url,
+      method: requestData.method,
+      form: requestData.data,
+      headers: this._oauth.toHeader(this._oauth.authorize(requestData))
+    }, (err, res, data) => {
       if (err) return cb(err)
 
       // Ready to make signed requests on behalf of the user
@@ -98,7 +127,7 @@ class LoginWithTwitter {
         oauth_token_secret: userTokenSecret,
         screen_name: userName,
         user_id: userId
-      } = querystring.parse(body)
+      } = querystring.parse(data.toString())
 
       cb(null, {
         userName,

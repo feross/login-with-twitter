@@ -14,7 +14,8 @@
     "url": "https://github.com/feross/login-with-twitter/issues"
   },
   "dependencies": {
-    "request": "^2.79.0"
+    "oauth-1.0a": "^2.2.1",
+    "simple-get": "^2.7.0"
   },
   "devDependencies": {
     "standard": "*",
