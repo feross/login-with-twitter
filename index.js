@@ -62,8 +62,13 @@ class LoginWithTwitter {
     } = params
 
     // Check that required params exist
-    if (!cb || typeof cb !== 'function') {
-      throw new Error('Invalid or missing `cb` parameter for login callback')
+    if (typeof cb !== 'function') {
+      throw new Error('Invalid or missing `cb` parameter for callback method')
+    }
+    if (typeof params.denied === 'string' && params.denied.length > 0) {
+      const err = new Error('User denied login permission')
+      err.code = 'USER_DENIED'
+      return cb(err)
     }
     if (typeof params.oauth_token !== 'string' || params.oauth_token.length === 0) {
       return cb(new Error('Invalid or missing `oauth_token` parameter for login callback'))
