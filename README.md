@@ -1,5 +1,7 @@
 # login-with-twitter [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/feross/login-with-twitter.svg)](https://greenkeeper.io/)
+
 [travis-image]: https://img.shields.io/travis/feross/login-with-twitter/master.svg
 [travis-url]: https://travis-ci.org/feross/login-with-twitter
 [npm-image]: https://img.shields.io/npm/v/login-with-twitter.svg
