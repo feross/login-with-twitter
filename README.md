@@ -29,7 +29,7 @@ Set up two routes on your web sever. We'll call them `/twitter` and
 `/twitter/callback`, but they can be named anything.
 
 ### Initialization
-Initialize this module with the consumer key and secret from creating a Twitter App with an Twitter Developer account.
+Initialize this module with the consumer key and secret for your Twitter App you created with an Twitter Developer account.
 
 ```js
 const LoginWithTwitter = require('login-with-twitter')
