@@ -78,7 +78,10 @@ app.get('/twitter/callback', (req, res) => {
     // Delete the tokenSecret securely
     delete req.session.tokenSecret
     
-    // The user object contains 4 key/value pairs, which you should store and use as you need, e.g. with your own fetch calls to Twitter's API, or another Twitter API library.
+    // The user object contains 4 key/value pairs, which
+    // you should store and use as you need, e.g. with your
+    // own calls to Twitter's API, or a Twitter API module
+    // like `twitter` or `twit`.
     // user = {
     //   userId,
     //   userName,
