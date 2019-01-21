@@ -68,8 +68,8 @@ Then, call `callback` from your `/twitter/callback` route. The request will incl
 ```js
 app.get('/twitter/callback', (req, res) => {
   tw.callback({
-    req.query.oauth_token,
-    req.query.oauth_verifier
+    oauth_token: req.query.oauth_token,
+    oauth_verifier: req.query.oauth_verifier
   }, req.session.tokenSecret, (err, user) => {
     if (err) {
       // Handle the error your way
