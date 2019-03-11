@@ -44,11 +44,12 @@ Point the user to the `/twitter` route and handle the request like this:
 
 ```js
 app.get('/twitter', function (req, res) {
-  tw.login((err, resp, data) => {
+  tw.login((err, tokenSecret, redirectUrl) => {
     if (err) {
         // handle the error
     }
-    res.redirect(data);
+    res.cookie('tokenSecret', tokenSecret, {maxAge: 3600000});
+    res.redirect(redirectUrl);
   });
 })
 ```
@@ -57,12 +58,12 @@ User will get redirected to Twitter and if they authorise the app, Twitter will 
 
 ```js
 app.get('/twitter/callback', function (req, res) {
-  tw.callback(req.query, '<your consumer secret>', (err, resp, data) => {
+  tw.callback(req.query, req.cookies.tokenSecret, (err, data) => {
     if (err) {
         // handle the error
     }
 
-    console.log(resp); // store user data somewhere
+    console.log(data); // store user data somewhere
   });
 })
 ```
