@@ -40,7 +40,32 @@ const tw = LoginWithTwitter({
 })
 ```
 
-## TODO
+Point the user to the `/twitter` route and handle the request like this:
+
+```js
+app.get('/twitter', function (req, res) {
+  tw.login((err, resp, data) => {
+    if (err) {
+        // handle the error
+    }
+    res.redirect(data);
+  });
+})
+```
+
+User will get redirected to Twitter and if they authorise the app, Twitter will redirect them back to your application, this time to `/twitter/callback`. Handle the request like this:
+
+```js
+app.get('/twitter/callback', function (req, res) {
+  tw.callback(req.query, '<your consumer secret>', (err, resp, data) => {
+    if (err) {
+        // handle the error
+    }
+
+    console.log(resp); // store user data somewhere
+  });
+})
+```
 
 ## license
 
