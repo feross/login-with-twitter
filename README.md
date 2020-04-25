@@ -56,7 +56,7 @@ app.get('/twitter', (req, res) => {
     req.session.tokenSecret = tokenSecret
     
     // Redirect to the /twitter/callback route, with the OAuth responses as query params
-    req.redirect(url)
+    res.redirect(url)
   })
 })
 ```
@@ -91,7 +91,7 @@ app.get('/twitter/callback', (req, res) => {
     req.session.user = user
     
     // Redirect to whatever route that can handle your new Twitter login user details!
-    req.redirect('/')
+    res.redirect('/')
   });
 });
 ```
