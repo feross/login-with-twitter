@@ -1,3 +1,4 @@
+/*! login-with-twitter. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 const crypto = require('crypto')
 const get = require('simple-get')
 const OAuth = require('oauth-1.0a')
