@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "oauth-1.0a": "^2.2.1",
-    "simple-get": "^3.0.3"
+    "simple-get": "^4.0.0"
   },
   "devDependencies": {
     "standard": "*",
