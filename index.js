@@ -68,7 +68,7 @@ class LoginWithTwitter {
 
       // Must validate that this param exists, according to Twitter docs
       if (callbackConfirmed !== 'true') {
-        return cb(new Error('Missing `oauth_callback_confirmed` parameter in response'))
+        return cb(new Error('Callback URL not approved for this client application'))
       }
 
       // Redirect visitor to this URL to authorize the app
@@ -102,7 +102,6 @@ class LoginWithTwitter {
     if (typeof tokenSecret !== 'string' || tokenSecret.length === 0) {
       return cb(new Error('Invalid or missing `tokenSecret` argument for login callback'))
     }
-
     const requestData = {
       url: TW_ACCESS_TOKEN_URL,
       method: 'POST',
