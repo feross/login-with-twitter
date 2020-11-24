@@ -102,7 +102,7 @@ class LoginWithTwitter {
     if (typeof tokenSecret !== 'string' || tokenSecret.length === 0) {
       return cb(new Error('Invalid or missing `tokenSecret` argument for login callback'))
     }
-    
+
     const requestData = {
       url: TW_ACCESS_TOKEN_URL,
       method: 'POST',
